@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEditor;
 
-namespace Editor
+namespace EditorPatch
 {
     [InitializeOnLoad]
     public static class SdkPatchBase
