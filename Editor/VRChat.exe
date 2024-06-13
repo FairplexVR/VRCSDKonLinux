@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Set Wine DLL overrides
+export WINEDLLOVERRIDES="dxgi=n,b;d3d11=n,b"
+
+# Construct and execute the VRChat launch command
+protontricks-launch --appid 438100 "/mnt/HDD/Jeux/Steam/steamapps/common/VRChat/VRChat.exe" \
+    --url="create?roomId=0000000001&hidden=true&name=BuildAndRun&url=file:///Z%3A%2Fhome%2Ffairplex%2F.local%2Fshare%2FVRChat%2FVRChat%2FWorlds%2Ftest.vrcw" \
+    --enable-debug-gui \
+    --enable-udon-debug-logging \
+    --watch-worlds
