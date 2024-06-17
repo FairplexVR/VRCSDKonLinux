@@ -1,8 +1,8 @@
 {
-    "name": "com.vrcsdk.linux",
+    "name": "com.vrchat.linux",
     "version": "1.0.0",
     "displayName": "VRCSDKonLinux",
-    "description": "VRChat SDK compatible with Linux.",
+    "description": "Make the SDK compatible with Linux.",
     "unity": "2022.3",
     "keywords": [
         "VRChat",

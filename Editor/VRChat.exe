@@ -3,9 +3,46 @@
 # Set Wine DLL overrides
 export WINEDLLOVERRIDES="dxgi=n,b;d3d11=n,b"
 
+# Find the latest .vrcw file in the specified directory
+latest_vrcw=$(ls -t ~/.local/share/VRChat/VRChat/Worlds/*.vrcw 2>/dev/null | head -n 1)
+
+if [[ -z "$latest_vrcw" ]]; then
+  echo "No .vrcw files found in ~/.local/share/VRChat/VRChat/Worlds"
+  exit 1
+fi
+
+# URL-encode function using built-in Bash functionality
+url_encode() {
+  # Usage: url_encode "string"
+  local string="$1"
+  local strlen=${#string}
+  local encoded=""
+  local pos c o
+
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+    c=${string:$pos:1}
+    case "$c" in
+      [-_.~a-zA-Z0-9] ) o="$c" ;;
+      * ) printf -v o '%%%02x' "'$c"
+    esac
+    encoded+="$o"
+  done
+
+  echo "$encoded"
+}
+
+# URL-encode the file path
+url_encoded_vrcw=$(url_encode "$latest_vrcw")
+
+# Construct Z: drive URL format
+z_drive_url="file:///Z%3A${url_encoded_vrcw}"
+
 # Construct and execute the VRChat launch command
 protontricks-launch --appid 438100 "/mnt/HDD/Jeux/Steam/steamapps/common/VRChat/VRChat.exe" \
-    --url="create?roomId=0000000001&hidden=true&name=BuildAndRun&url=file:///Z%3A%2Fhome%2Ffairplex%2F.local%2Fshare%2FVRChat%2FVRChat%2FWorlds%2Ftest.vrcw" \
+    --url="create?roomId=0000000001&hidden=true&name=BuildAndRun&url=${z_drive_url}" \
     --enable-debug-gui \
     --enable-udon-debug-logging \
     --watch-worlds
+
+# Example output (for testing)
+echo "Z: Drive URL: ${z_drive_url}"
